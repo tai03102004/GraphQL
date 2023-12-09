@@ -20,5 +20,42 @@ export const resolvers = {
             })
             return article;
         }
+    },
+    Mutation : {
+        createArticle : async (_,args) => {
+            const { article } = args;
+
+            const recordArticles = new Article(article);
+
+            await recordArticles.save();
+
+            return recordArticles;
+        },
+        deleteArticle : async (_,args) => {
+            const { id } = args;
+            await Article.updateOne({
+                _id : id,
+            },{
+                deleted: true,
+                deletedAt: new Date(),
+            });
+
+            return "Đã xoá";
+        },
+
+        updateArticle: async (_, args) => {
+            const { id, article } = args;
+    
+            await Article.updateOne({
+                _id: id,
+                deleted: false
+            }, article);
+    
+            const record = await Article.findOne({
+                _id: id
+            });
+    
+            return record;
+        },
     }
 };
