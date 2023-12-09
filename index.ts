@@ -5,6 +5,12 @@ import * as database from "./config/database";
 
 import Article from "./models/article.model";
 
+import {ApolloServer,gql} from "apollo-server-express";
+
+import {typeDefs} from "./typeDefs";
+
+import {resolvers} from "./resolvers";
+
 dotenv.config();
 
 database.connect();
@@ -14,18 +20,36 @@ const port: number | string = process.env.port || 3000;
 
 // Rest api
 
-app.get("/articles" , async (req: Request, res: Response)  => {
+// app.get("/articles" , async (req: Request, res: Response)  => {
 
-    const articles = await Article.find ({
-        deleted : false,
+//     const articles = await Article.find ({
+//         deleted : false,
+//     });
+
+//     res.json ({
+//         articles: []
+//     });
+
+// });
+
+const startServer = async () => {
+
+    const apolloServer = new ApolloServer({
+        typeDefs,
+        resolvers,
     });
 
-    res.json ({
-        articles: []
+    await apolloServer.start();
+
+    apolloServer.applyMiddleware({
+        app: app,
+        path: "/graphql"
     });
 
-});
+    app.listen (port ,()  => {
+        console.log(`App listening on port ${port}`);
+    });
+};
 
-app.listen (port ,()  => {
-    console.log(`App listening on port ${port}`);
-});
+startServer();
+
