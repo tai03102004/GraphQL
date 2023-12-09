@@ -3,8 +3,6 @@ import dotenv from 'dotenv';
 
 import * as database from "./config/database";
 
-import Article from "./models/article.model";
-
 import {ApolloServer,gql} from "apollo-server-express";
 
 import {typeDefs} from "./typeDefs";
