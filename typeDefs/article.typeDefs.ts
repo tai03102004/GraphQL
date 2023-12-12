@@ -12,7 +12,14 @@ export const typeDefsArticle = gql`
 
     type Query { # query : Lấy ra truy vấn
         hello: String,
-        getListArticle: [Article],
+        getListArticle(
+            sortKey:String, 
+            sortValue: String,
+            currentPage: Int = 1,
+            limitItems: Int = 2,
+            filterKey: String ,
+            filterValue: String,
+        ): [Article],
         # Cho phep lay ra 1 id
         getArticle(id: ID): Article, 
 

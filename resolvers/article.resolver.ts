@@ -7,10 +7,48 @@ export const resolversArticle = {
             return "Hello Word!";
         },
         // Article
-        getListArticle : async () => {
-            const articles = await Article.find({
-                deleted : false
-            });
+        getListArticle : async (_ , args) => {
+            const {
+                sortKey,
+                sortValue,
+                currentPage,
+                limitItems,
+                filterKey,
+                filterValue,
+            } = args;
+
+            const find = {
+                deleted : false,
+            }
+
+            // Sort
+            // Sắp xếp sortKey theo 2 kiểu asc , desc
+            const sort = {};
+            if (sortKey && sortValue) {
+                sort[sortKey] = sortValue;
+            }
+
+            // End Sort
+
+            // Pagination
+
+            const skip = (currentPage - 1) * limitItems; // Bỏ qua chỉ hiên các trang hiện tại
+
+            // End Pagination
+
+            // Filter
+
+            if (filterKey && filterValue) {
+                find[filterKey] = filterValue;
+            }
+
+            // End Filter
+
+            const articles = await Article. 
+                find(find).
+                sort(sort).
+                limit(limitItems).
+                skip(skip);
 
             return articles;
         },
