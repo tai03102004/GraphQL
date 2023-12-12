@@ -12,6 +12,10 @@ export const typeDefsUser = gql`
         message: String,
     }
 
+    type Query {
+        getUser : User,
+    }
+
     input RegisterUserInput { # Muốn tạo mới phải dùng từ khoá Input
         fullName: String,
         email: String,

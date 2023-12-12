@@ -4,6 +4,43 @@ import User from "../models/user.model";
 import md5 from "md5";
 
 export const resolversUser = {
+
+    Query : {
+        getUser: async(_,args,context) => {
+            // Lấy ra các phần trong getUser
+
+            if (context["user"].token) {    
+                
+                console.log(context["user"]);
+                const infoUser = await User.findOne({
+                    token: context["user"].token, // Lấy ra token trong phần headers
+                    deleted: false,
+                });
+
+                if (infoUser) {
+                    return {
+                        code : 200,
+                        message: "success",
+                        id : infoUser.id,
+                        fullName : infoUser.fullName,
+                        email : infoUser.email,
+                        token : infoUser.token,
+                    }
+                } else {
+                    return {
+                        code: 400,
+                        message : "error",
+                    }
+                }
+            } else {
+                return {
+                    code: 400,
+                    message : "error",
+                }
+            }
+
+        }
+    },
         
     Mutation : {
         // User
