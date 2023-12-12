@@ -15,6 +15,7 @@ export const resolversArticle = {
                 limitItems,
                 filterKey,
                 filterValue,
+                keyword,
             } = args;
 
             const find = {
@@ -43,6 +44,15 @@ export const resolversArticle = {
             }
 
             // End Filter
+
+            // Search
+
+            if (keyword) {
+                const keywordRegexp = new RegExp(keyword,"i");
+                find["title"] = keywordRegexp;
+            }
+
+            // End Search
 
             const articles = await Article. 
                 find(find).
