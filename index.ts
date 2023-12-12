@@ -7,7 +7,7 @@ import {ApolloServer,gql} from "apollo-server-express";
 
 import {typeDefs} from "./typeDefs/index.typeDefs";
 
-import {resolvers} from "./resolvers";
+import {resolvers} from "./resolvers/index.resolver";
 
 dotenv.config();
 
@@ -34,7 +34,7 @@ const startServer = async () => {
 
     const apolloServer = new ApolloServer({
         typeDefs: typeDefs,
-        resolvers,
+        resolvers : resolvers,
     });
 
     await apolloServer.start();
