@@ -5,7 +5,7 @@ import * as database from "./config/database";
 
 import {ApolloServer,gql} from "apollo-server-express";
 
-import {typeDefs} from "./typeDefs";
+import {typeDefs} from "./typeDefs/index.typeDefs";
 
 import {resolvers} from "./resolvers";
 
@@ -33,7 +33,7 @@ const port: number | string = process.env.port || 3000;
 const startServer = async () => {
 
     const apolloServer = new ApolloServer({
-        typeDefs,
+        typeDefs: typeDefs,
         resolvers,
     });
 
