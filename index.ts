@@ -40,6 +40,7 @@ const startServer = async () => {
     const apolloServer = new ApolloServer({
         typeDefs: typeDefs,
         resolvers : resolvers,
+        introspection : true, // Gợi ý code khi đẩy code lên online
         context: ({req}) => {
             return { ... req};
         }
